@@ -6,7 +6,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 def widgets() -> None:
-   linkLabel = tk.Label(
+   textLabel = tk.Label(
       root,
       text='Text: ',
       font='System 22',
@@ -14,23 +14,54 @@ def widgets() -> None:
       padx=5,
       pady=5
    )
-   linkLabel.grid(
+   textLabel.grid(
       row=0,
       column=0,
       padx=5,
       pady=5
    )
-   linkText = tk.Text(
+   textText = tk.Text(
       root,
       width=41,
       height=11,
       font='System 22'
    )
-   linkText.grid(
+   textText.grid(
       row=0,
       column=1,
       padx=5,
       pady=5,
+      columnspan=3
+   )
+
+   keyLabel = tk.Label(
+      root,
+      text='Key: ',
+      font='System 22',
+      bg='DarkSlateBlue',
+      padx=1,
+      pady=1
+   )
+   keyLabel.grid(
+      row=3,
+      column=1,
+      padx=1,
+      pady=1,
+      sticky='e'
+   )
+   keyText = tk.Entry(
+      root,
+      textvariable=key,
+      width=3,
+      font='System 22',
+      justify='center'
+   )
+   keyText.grid(
+      row=3,
+      column=2,
+      padx=5,
+      pady=5,
+      sticky='w'
    )
 
    convertBut = tk.Button(
@@ -38,14 +69,14 @@ def widgets() -> None:
       text='Convert',
       font='System 22',
       bg='SlateGrey',
-      command=lambda: convert( linkText )
+      command=lambda: convert( textText )
    )
    convertBut.grid(
       row=3,
-      column=0,
+      column=3,
       padx=5,
       pady=5,
-      columnspan=7
+      sticky='w'
    )
 
 def convert( tkText ) -> None:
@@ -53,7 +84,7 @@ def convert( tkText ) -> None:
    outText = ''
 
    for c in text:
-      outText += c + ' '
+      outText += c + key.get()
 
    pyperclip.copy( outText[:-1] )
 
@@ -66,6 +97,8 @@ if __name__ == '__main__':
    root.resizable( False, False )
    root.title( 'spaceBetween' )
    root.config( background='DarkSlateBlue' )
+
+   key = tk.StringVar()
 
    widgets()
 
